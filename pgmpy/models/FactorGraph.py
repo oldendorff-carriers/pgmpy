@@ -115,7 +115,7 @@ class FactorGraph(UndirectedGraph):
         ...                   ('b', phi2), ('c', phi2)])
         """
         for factor in factors:
-            if set(factor.variables) - set(factor.variables).intersection(
+            if set(factor.scope()) - set(factor.scope()).intersection(
                 set(self.nodes())
             ):
                 raise ValueError(
@@ -124,7 +124,7 @@ class FactorGraph(UndirectedGraph):
 
             if replace:
                 for fa in self.factors:
-                    if set(factor.variables) == set(fa.variables):
+                    if set(factor.scope()) == set(fa.scope()):
                         neighbors = self.neighbors(fa)
                         self.remove_factors(fa)
                         self.add_node(factor)
